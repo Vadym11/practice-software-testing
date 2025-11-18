@@ -1,0 +1,6 @@
+FROM php:8.3-cli-alpine
+WORKDIR /app
+COPY sprint5/API/ ./
+
+# Default: queue worker (override to schedule:run in K8s/Cron if needed)
+CMD ["php","artisan","queue:work","--tries=3","--timeout=90"]
