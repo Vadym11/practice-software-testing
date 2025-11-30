@@ -14,7 +14,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: playwright
-          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/playwright-k8s:1764542079
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/playwright-k8s:1764542288
           resources:
             requests:
               cpu: "200m"
@@ -30,7 +30,7 @@ spec:
             - name: SLACK_WEBHOOK
               valueFrom:
                 secretKeyRef:
-                  name: pst-test-secrets # secret name
+                  name: pst-test-secret # secret name
                   key: SLACK_WEBHOOK
             - name: TEST_NAME
               value: "PlaywrightTests"
