@@ -97,6 +97,13 @@ jobs:
           echo "Requesting http://127.0.0.1:${K8S_APP_PORT}/"
           curl -v --fail "http://127.0.0.1:${K8S_APP_PORT}/" | head -40
 
+      # 8.1. Apply Playwright test job
+      - name: Apply Playwright test job
+        run: |
+          set -e
+          echo "Applying Playwright test job..."
+          kubectl apply -n "$K8S_NAMESPACE" -f k8s/pst-playwright.yaml
+
       # (Later you’ll add a step here to run Playwright against BASE_URL=http://127.0.0.1:${K8S_APP_PORT})
 
       # 9. Stop port-forward (always attempt, even if previous steps failed)
