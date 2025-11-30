@@ -5,7 +5,7 @@ const { spawn } = require('child_process');
 const axios = require('axios');
 
 // --- Config from env ---
-const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK;
+const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
 const TEST_NAME = process.env.TEST_NAME || 'Playwright test run';
 
 function formatDuration(ms) {

@@ -14,7 +14,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: playwright
-          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/playwright-k8s:1764542288
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/playwright-k8s:1764542615
           resources:
             requests:
               cpu: "200m"
@@ -26,12 +26,12 @@ spec:
           env:
             # Point tests to the in-cluster Service for your web app
             - name: BASE_URL
-              value: "http://pst-web.toolshop.svc.cluster.local"
-            - name: SLACK_WEBHOOK
+              value: "http://127.0.0.1:8080/"
+            - name: SLACK_WEBHOOK_URL
               valueFrom:
                 secretKeyRef:
                   name: pst-test-secret # secret name
-                  key: SLACK_WEBHOOK
+                  key: SLACK_WEBHOOK_URL
             - name: TEST_NAME
               value: "PlaywrightTests"
             # If your tests need other env vars (user, password, etc.), add them here
