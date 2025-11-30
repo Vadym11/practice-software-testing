@@ -104,6 +104,25 @@ jobs:
           echo "Applying Playwright test job..."
           kubectl apply -n "$K8S_NAMESPACE" -f k8s/pst-playwright.yaml
 
+      # 8.2. Wait for Playwright test job to finish
+      - name: Wait for Playwright test job to finish
+        run: |
+          echo "Waiting for Playwright test job to complete..."
+
+          # First wait for completion
+          if kubectl wait --for=condition=complete job/pst-playwright-tests \
+              -n "$K8S_NAMESPACE" --timeout=600s; then
+            echo "Playwright job completed successfully."
+          else
+            echo "Job did not reach 'Complete'. Checking if it failed..."
+            kubectl describe job/pst-playwright-tests -n "$K8S_NAMESPACE"
+            kubectl logs job/pst-playwright-tests -n "$K8S_NAMESPACE"
+            exit 1
+          fi
+
+          echo "==== Playwright job logs ===="
+          kubectl logs job/pst-playwright-tests -n "$K8S_NAMESPACE" || true
+
       # (Later you’ll add a step here to run Playwright against BASE_URL=http://127.0.0.1:${K8S_APP_PORT})
 
       # 9. Stop port-forward (always attempt, even if previous steps failed)
