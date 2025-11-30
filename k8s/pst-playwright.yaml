@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: pst-playwright-tests
-  namespace: toolshop
+  # namespace: toolshop
 spec:
   backoffLimit: 0              # do not retry on failure
   ttlSecondsAfterFinished: 900  # auto-cleanup after 15 mins (optional)
@@ -14,7 +14,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: playwright
-          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/playwright-k8s:1764541252
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/playwright-k8s:1764541669
           resources:
             requests:
               cpu: "200m"
