@@ -1,0 +1,1760 @@
+# these are backed-up yamls from the cluster
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-11-15T23:23:45Z"
+    generateName: pst-api-6ddb7d4c76-
+    generation: 1
+    labels:
+      app: pst-api
+      pod-template-hash: 6ddb7d4c76
+    name: pst-api-6ddb7d4c76-f8bhv
+    namespace: toolshop
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: pst-api-6ddb7d4c76
+      uid: ae201823-0b0e-4996-97d1-1bedc83cbc8d
+    resourceVersion: "1763249045928479017"
+    uid: b9f529fb-ed22-40ea-bfeb-84a4fe5d0e76
+  spec:
+    containers:
+    - env:
+      - name: APP_ENV
+        value: production
+      - name: APP_DEBUG
+        value: "false"
+      - name: APP_URL
+        value: http://pst-apiweb
+      - name: DB_CONNECTION
+        value: mysql
+      - name: DB_HOST
+        value: pst-db
+      - name: DB_PORT
+        value: "3306"
+      - name: DB_DATABASE
+        valueFrom:
+          secretKeyRef:
+            key: MYSQL_DATABASE
+            name: pst-db-secret
+      - name: DB_USERNAME
+        valueFrom:
+          secretKeyRef:
+            key: MYSQL_USER
+            name: pst-db-secret
+      - name: DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: MYSQL_PASSWORD
+            name: pst-db-secret
+      image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/api-k8s:0a3704d
+      imagePullPolicy: IfNotPresent
+      name: api
+      ports:
+      - containerPort: 9000
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zqnwj
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: gke-cluster-testing-default-pool-f41d1a8e-s9z8
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-zqnwj
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:24:05Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:23:45Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:24:05Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:24:05Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:23:45Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://0762d674a172562e6c9a05789b0fc5110b3e1681abc6f938849d7a0bc92abefa
+      image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/api-k8s:0a3704d
+      imageID: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/api-k8s@sha256:d03cd7ebffb9ba877057c0fba3ed9e23db3cfa7ed38d3fd107d10e73f18b2b81
+      lastState: {}
+      name: api
+      ready: true
+      resources: {}
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-15T23:24:05Z"
+      user:
+        linux:
+          gid: 0
+          supplementalGroups:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 6
+          - 10
+          - 11
+          - 20
+          - 26
+          - 27
+          uid: 0
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zqnwj
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 10.132.0.6
+    hostIPs:
+    - ip: 10.132.0.6
+    phase: Running
+    podIP: 10.60.0.14
+    podIPs:
+    - ip: 10.60.0.14
+    qosClass: BestEffort
+    startTime: "2025-11-15T23:23:45Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-11-15T23:44:12Z"
+    generateName: pst-apiweb-5886667cf4-
+    generation: 1
+    labels:
+      app: pst-apiweb
+      pod-template-hash: 5886667cf4
+    name: pst-apiweb-5886667cf4-h8xql
+    namespace: toolshop
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: pst-apiweb-5886667cf4
+      uid: d4ed8ed1-5ffd-4589-a921-1845fa3a5f36
+    resourceVersion: "1763250254228559005"
+    uid: 89638545-240b-4513-bc57-3a4dc2974593
+  spec:
+    containers:
+    - env:
+      - name: API_BACKEND_HOST
+        value: pst-api
+      - name: API_BACKEND_PORT
+        value: "9000"
+      image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:0a3704d
+      imagePullPolicy: IfNotPresent
+      name: apiweb
+      ports:
+      - containerPort: 80
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-l2lvp
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: gke-cluster-testing-default-pool-f41d1a8e-s9z8
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-l2lvp
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:44:14Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:44:12Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:44:14Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:44:14Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:44:12Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://2b8886d05eb6de4a49fc1fcb8613ddc9989db699e84fdd081ddccb1a9d17263a
+      image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:0a3704d
+      imageID: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s@sha256:dd2ab8d64c1d8c8f4bbb22fdd68efbd16aa6f8bb97bbab89de24b95dbf3c7aa2
+      lastState: {}
+      name: apiweb
+      ready: true
+      resources: {}
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-15T23:44:13Z"
+      user:
+        linux:
+          gid: 0
+          supplementalGroups:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 6
+          - 10
+          - 11
+          - 20
+          - 26
+          - 27
+          uid: 0
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-l2lvp
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 10.132.0.6
+    hostIPs:
+    - ip: 10.132.0.6
+    phase: Running
+    podIP: 10.60.0.19
+    podIPs:
+    - ip: 10.60.0.19
+    qosClass: BestEffort
+    startTime: "2025-11-15T23:44:12Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-11-15T23:23:47Z"
+    generateName: pst-cron-b44b75b65-
+    generation: 1
+    labels:
+      app: pst-cron
+      pod-template-hash: b44b75b65
+    name: pst-cron-b44b75b65-xgf8p
+    namespace: toolshop
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: pst-cron-b44b75b65
+      uid: 68e63385-a2f3-445b-b71f-a8888c0c3eeb
+    resourceVersion: "1763249052055007002"
+    uid: a6e8c589-92f6-4b3b-ad8d-d498632b7b46
+  spec:
+    containers:
+    - env:
+      - name: APP_ENV
+        value: production
+      - name: DB_CONNECTION
+        value: mysql
+      - name: DB_HOST
+        value: pst-db
+      - name: DB_PORT
+        value: "3306"
+      - name: DB_DATABASE
+        valueFrom:
+          secretKeyRef:
+            key: MYSQL_DATABASE
+            name: pst-db-secret
+      - name: DB_USERNAME
+        valueFrom:
+          secretKeyRef:
+            key: MYSQL_USER
+            name: pst-db-secret
+      - name: DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: MYSQL_PASSWORD
+            name: pst-db-secret
+      image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/cron-k8s:0a3704d
+      imagePullPolicy: IfNotPresent
+      name: cron
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kqlwf
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: gke-cluster-testing-default-pool-f41d1a8e-s9z8
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-kqlwf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:24:12Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:23:47Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:24:12Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:24:12Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:23:47Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://1c8542bbfbb5fe0561a21b75c9153504af84bec60ab73a54cb9fad7a8ee5629a
+      image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/cron-k8s:0a3704d
+      imageID: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/cron-k8s@sha256:d893f65751262c4b98f2ec986abf677e3d68f99483f00bb3f3a9d4c7c58778dd
+      lastState: {}
+      name: cron
+      ready: true
+      resources: {}
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-15T23:24:11Z"
+      user:
+        linux:
+          gid: 0
+          supplementalGroups:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 6
+          - 10
+          - 11
+          - 20
+          - 26
+          - 27
+          uid: 0
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kqlwf
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 10.132.0.6
+    hostIPs:
+    - ip: 10.132.0.6
+    phase: Running
+    podIP: 10.60.0.17
+    podIPs:
+    - ip: 10.60.0.17
+    qosClass: BestEffort
+    startTime: "2025-11-15T23:23:47Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-11-15T23:23:44Z"
+    generateName: pst-db-74c6d9cf8d-
+    generation: 1
+    labels:
+      app: pst-db
+      pod-template-hash: 74c6d9cf8d
+    name: pst-db-74c6d9cf8d-kdx8m
+    namespace: toolshop
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: pst-db-74c6d9cf8d
+      uid: 21c14cd7-0877-4d82-a32b-0ec9a56e7cbe
+    resourceVersion: "1763249060255663013"
+    uid: 5e1a7e4c-cb1f-481c-9c4c-f8cb93df5247
+  spec:
+    containers:
+    - env:
+      - name: MYSQL_ROOT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: MYSQL_ROOT_PASSWORD
+            name: pst-db-secret
+      - name: MYSQL_DATABASE
+        valueFrom:
+          secretKeyRef:
+            key: MYSQL_DATABASE
+            name: pst-db-secret
+      - name: MYSQL_USER
+        valueFrom:
+          secretKeyRef:
+            key: MYSQL_USER
+            name: pst-db-secret
+      - name: MYSQL_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: MYSQL_PASSWORD
+            name: pst-db-secret
+      image: mysql:8.0
+      imagePullPolicy: IfNotPresent
+      name: mysql
+      ports:
+      - containerPort: 3306
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/mysql
+        name: db-data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7rq87
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: gke-cluster-testing-default-pool-f41d1a8e-s9z8
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: db-data
+    - name: kube-api-access-7rq87
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:24:20Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:23:45Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:24:20Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:24:20Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:23:45Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://dd361d67026c4a3039954442432ea0e21332ae6c91373c1490dc02ab4149c33a
+      image: docker.io/library/mysql:8.0
+      imageID: docker.io/library/mysql@sha256:f37951fc3753a6a22d6c7bf6978c5e5fefcf6f31814d98c582524f98eae52b21
+      lastState: {}
+      name: mysql
+      ready: true
+      resources: {}
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-15T23:24:19Z"
+      user:
+        linux:
+          gid: 0
+          supplementalGroups:
+          - 0
+          uid: 0
+      volumeMounts:
+      - mountPath: /var/lib/mysql
+        name: db-data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7rq87
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 10.132.0.6
+    hostIPs:
+    - ip: 10.132.0.6
+    phase: Running
+    podIP: 10.60.0.13
+    podIPs:
+    - ip: 10.60.0.13
+    qosClass: BestEffort
+    startTime: "2025-11-15T23:23:45Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-11-15T23:32:38Z"
+    generateName: pst-web-77d7b4cf7-
+    generation: 1
+    labels:
+      app: pst-web
+      pod-template-hash: 77d7b4cf7
+    name: pst-web-77d7b4cf7-xpj5q
+    namespace: toolshop
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: pst-web-77d7b4cf7
+      uid: 29e8c1d9-bba6-4ebf-8687-8ce73a0927fb
+    resourceVersion: "1763250223109471002"
+    uid: 4a274ed3-d296-43db-9b0c-049c244b9324
+  spec:
+    containers:
+    - env:
+      - name: API_WEB_HOST
+        value: pst-apiweb
+      - name: API_WEB_PORT
+        value: "80"
+      image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:0a3704d
+      imagePullPolicy: IfNotPresent
+      name: web
+      ports:
+      - containerPort: 80
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-r782m
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: gke-cluster-testing-default-pool-f41d1a8e-s9z8
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-r782m
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:32:40Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:32:38Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:43:43Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:43:43Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-15T23:32:38Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://6eb02331d8b41a7702ee83e7755cfe3a7bd633d50b0027d44633e42e4ab7ee01
+      image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:0a3704d
+      imageID: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s@sha256:dd2ab8d64c1d8c8f4bbb22fdd68efbd16aa6f8bb97bbab89de24b95dbf3c7aa2
+      lastState:
+        terminated:
+          containerID: containerd://36d708f9b6682c34f183950f5bfa894ae96c7c44df2d56d589fafc1f9ed7d296
+          exitCode: 1
+          finishedAt: "2025-11-15T23:38:31Z"
+          reason: Error
+          startedAt: "2025-11-15T23:38:31Z"
+      name: web
+      ready: true
+      resources: {}
+      restartCount: 7
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-15T23:43:42Z"
+      user:
+        linux:
+          gid: 0
+          supplementalGroups:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 6
+          - 10
+          - 11
+          - 20
+          - 26
+          - 27
+          uid: 0
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-r782m
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 10.132.0.6
+    hostIPs:
+    - ip: 10.132.0.6
+    phase: Running
+    podIP: 10.60.0.18
+    podIPs:
+    - ip: 10.60.0.18
+    qosClass: BestEffort
+    startTime: "2025-11-15T23:32:38Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"api","namespace":"toolshop"},"spec":{"ports":[{"name":"fpm","port":9000,"targetPort":9000}],"selector":{"app":"pst-api"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-11-15T23:42:05Z"
+    name: api
+    namespace: toolshop
+    resourceVersion: "1763250125499343009"
+    uid: a323f3d2-a8b2-4c96-a3ba-33a3bcd3cbf5
+  spec:
+    clusterIP: 34.118.239.85
+    clusterIPs:
+    - 34.118.239.85
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: fpm
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    selector:
+      app: pst-api
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"apiweb","namespace":"toolshop"},"spec":{"ports":[{"name":"http","port":80,"targetPort":80}],"selector":{"app":"pst-apiweb"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-11-15T23:41:59Z"
+    name: apiweb
+    namespace: toolshop
+    resourceVersion: "1763250119287183002"
+    uid: 8835c1d2-619c-40dd-a629-7cc6f3bb5aae
+  spec:
+    clusterIP: 34.118.228.161
+    clusterIPs:
+    - 34.118.228.161
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: pst-apiweb
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"pst-api","namespace":"toolshop"},"spec":{"ports":[{"name":"fpm","port":9000,"targetPort":9000}],"selector":{"app":"pst-api"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-11-15T23:23:45Z"
+    name: pst-api
+    namespace: toolshop
+    resourceVersion: "1763249025586975008"
+    uid: bf60fe4a-c42e-469a-a77e-9cc6d687fd70
+  spec:
+    clusterIP: 34.118.227.216
+    clusterIPs:
+    - 34.118.227.216
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: fpm
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    selector:
+      app: pst-api
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"pst-apiweb","namespace":"toolshop"},"spec":{"ports":[{"name":"http","port":80,"targetPort":80}],"selector":{"app":"pst-apiweb"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-11-15T23:23:46Z"
+    name: pst-apiweb
+    namespace: toolshop
+    resourceVersion: "1763249026404783015"
+    uid: 701ebf05-8c4b-4105-a0a0-c3ba255834fa
+  spec:
+    clusterIP: 34.118.237.80
+    clusterIPs:
+    - 34.118.237.80
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: pst-apiweb
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"pst-db","namespace":"toolshop"},"spec":{"ports":[{"name":"mysql","port":3306,"targetPort":3306}],"selector":{"app":"pst-db"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-11-15T23:23:44Z"
+    name: pst-db
+    namespace: toolshop
+    resourceVersion: "1763249024817583010"
+    uid: b3d43e02-2f60-46c6-828b-5568258c98cc
+  spec:
+    clusterIP: 34.118.237.254
+    clusterIPs:
+    - 34.118.237.254
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: mysql
+      port: 3306
+      protocol: TCP
+      targetPort: 3306
+    selector:
+      app: pst-db
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"pst-web","namespace":"toolshop"},"spec":{"ports":[{"name":"http","port":80,"targetPort":80}],"selector":{"app":"pst-web"},"type":"LoadBalancer"}}
+    creationTimestamp: "2025-11-15T23:23:47Z"
+    finalizers:
+    - gke.networking.io/l4-netlb-v1
+    - service.kubernetes.io/load-balancer-cleanup
+    name: pst-web
+    namespace: toolshop
+    resourceVersion: "1763249065839327017"
+    uid: 487288ab-8e3d-46e0-9f43-733a6ecafcb8
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 34.118.230.2
+    clusterIPs:
+    - 34.118.230.2
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      nodePort: 30461
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: pst-web
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 34.22.219.235
+        ipMode: VIP
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"pst-api","namespace":"toolshop"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"pst-api"}},"template":{"metadata":{"labels":{"app":"pst-api"}},"spec":{"containers":[{"env":[{"name":"APP_ENV","value":"production"},{"name":"APP_DEBUG","value":"false"},{"name":"APP_URL","value":"http://pst-apiweb"},{"name":"DB_CONNECTION","value":"mysql"},{"name":"DB_HOST","value":"pst-db"},{"name":"DB_PORT","value":"3306"},{"name":"DB_DATABASE","valueFrom":{"secretKeyRef":{"key":"MYSQL_DATABASE","name":"pst-db-secret"}}},{"name":"DB_USERNAME","valueFrom":{"secretKeyRef":{"key":"MYSQL_USER","name":"pst-db-secret"}}},{"name":"DB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"MYSQL_PASSWORD","name":"pst-db-secret"}}}],"image":"europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/api-k8s:0a3704d","imagePullPolicy":"IfNotPresent","name":"api","ports":[{"containerPort":9000}]}]}}}}
+    creationTimestamp: "2025-11-15T23:23:45Z"
+    generation: 1
+    name: pst-api
+    namespace: toolshop
+    resourceVersion: "1763249046017071023"
+    uid: dcf83979-2cb6-440c-bafe-2cae63672bef
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: pst-api
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: pst-api
+      spec:
+        containers:
+        - env:
+          - name: APP_ENV
+            value: production
+          - name: APP_DEBUG
+            value: "false"
+          - name: APP_URL
+            value: http://pst-apiweb
+          - name: DB_CONNECTION
+            value: mysql
+          - name: DB_HOST
+            value: pst-db
+          - name: DB_PORT
+            value: "3306"
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_DATABASE
+                name: pst-db-secret
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_USER
+                name: pst-db-secret
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_PASSWORD
+                name: pst-db-secret
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/api-k8s:0a3704d
+          imagePullPolicy: IfNotPresent
+          name: api
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-15T23:24:05Z"
+      lastUpdateTime: "2025-11-15T23:24:05Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-11-15T23:23:45Z"
+      lastUpdateTime: "2025-11-15T23:24:05Z"
+      message: ReplicaSet "pst-api-6ddb7d4c76" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"pst-apiweb","namespace":"toolshop"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"pst-apiweb"}},"template":{"metadata":{"labels":{"app":"pst-apiweb"}},"spec":{"containers":[{"env":[{"name":"API_BACKEND_HOST","value":"pst-api"},{"name":"API_BACKEND_PORT","value":"9000"}],"image":"europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:0a3704d","imagePullPolicy":"IfNotPresent","name":"apiweb","ports":[{"containerPort":80}]}]}}}}
+    creationTimestamp: "2025-11-15T23:23:46Z"
+    generation: 1
+    name: pst-apiweb
+    namespace: toolshop
+    resourceVersion: "1763250254310063017"
+    uid: f4754cea-3b9a-48b8-8e82-86dff3d3fdbb
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: pst-apiweb
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: pst-apiweb
+      spec:
+        containers:
+        - env:
+          - name: API_BACKEND_HOST
+            value: pst-api
+          - name: API_BACKEND_PORT
+            value: "9000"
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:0a3704d
+          imagePullPolicy: IfNotPresent
+          name: apiweb
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-15T23:23:46Z"
+      lastUpdateTime: "2025-11-15T23:23:58Z"
+      message: ReplicaSet "pst-apiweb-5886667cf4" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-11-15T23:44:14Z"
+      lastUpdateTime: "2025-11-15T23:44:14Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"pst-cron","namespace":"toolshop"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"pst-cron"}},"template":{"metadata":{"labels":{"app":"pst-cron"}},"spec":{"containers":[{"env":[{"name":"APP_ENV","value":"production"},{"name":"DB_CONNECTION","value":"mysql"},{"name":"DB_HOST","value":"pst-db"},{"name":"DB_PORT","value":"3306"},{"name":"DB_DATABASE","valueFrom":{"secretKeyRef":{"key":"MYSQL_DATABASE","name":"pst-db-secret"}}},{"name":"DB_USERNAME","valueFrom":{"secretKeyRef":{"key":"MYSQL_USER","name":"pst-db-secret"}}},{"name":"DB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"MYSQL_PASSWORD","name":"pst-db-secret"}}}],"image":"europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/cron-k8s:0a3704d","imagePullPolicy":"IfNotPresent","name":"cron"}]}}}}
+    creationTimestamp: "2025-11-15T23:23:47Z"
+    generation: 1
+    name: pst-cron
+    namespace: toolshop
+    resourceVersion: "1763249052194927008"
+    uid: ee4ef2d9-16dd-4eaa-8c11-cb70543e4487
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: pst-cron
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: pst-cron
+      spec:
+        containers:
+        - env:
+          - name: APP_ENV
+            value: production
+          - name: DB_CONNECTION
+            value: mysql
+          - name: DB_HOST
+            value: pst-db
+          - name: DB_PORT
+            value: "3306"
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_DATABASE
+                name: pst-db-secret
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_USER
+                name: pst-db-secret
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_PASSWORD
+                name: pst-db-secret
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/cron-k8s:0a3704d
+          imagePullPolicy: IfNotPresent
+          name: cron
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-15T23:24:12Z"
+      lastUpdateTime: "2025-11-15T23:24:12Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-11-15T23:23:47Z"
+      lastUpdateTime: "2025-11-15T23:24:12Z"
+      message: ReplicaSet "pst-cron-b44b75b65" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"pst-db","namespace":"toolshop"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"pst-db"}},"template":{"metadata":{"labels":{"app":"pst-db"}},"spec":{"containers":[{"env":[{"name":"MYSQL_ROOT_PASSWORD","valueFrom":{"secretKeyRef":{"key":"MYSQL_ROOT_PASSWORD","name":"pst-db-secret"}}},{"name":"MYSQL_DATABASE","valueFrom":{"secretKeyRef":{"key":"MYSQL_DATABASE","name":"pst-db-secret"}}},{"name":"MYSQL_USER","valueFrom":{"secretKeyRef":{"key":"MYSQL_USER","name":"pst-db-secret"}}},{"name":"MYSQL_PASSWORD","valueFrom":{"secretKeyRef":{"key":"MYSQL_PASSWORD","name":"pst-db-secret"}}}],"image":"mysql:8.0","name":"mysql","ports":[{"containerPort":3306}],"volumeMounts":[{"mountPath":"/var/lib/mysql","name":"db-data"}]}],"volumes":[{"emptyDir":{},"name":"db-data"}]}}}}
+    creationTimestamp: "2025-11-15T23:23:44Z"
+    generation: 1
+    name: pst-db
+    namespace: toolshop
+    resourceVersion: "1763249060326863011"
+    uid: 45a29bfb-0477-437e-9200-c7d4385cbed5
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: pst-db
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: pst-db
+      spec:
+        containers:
+        - env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_ROOT_PASSWORD
+                name: pst-db-secret
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_DATABASE
+                name: pst-db-secret
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_USER
+                name: pst-db-secret
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_PASSWORD
+                name: pst-db-secret
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          name: mysql
+          ports:
+          - containerPort: 3306
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: db-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: db-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-15T23:24:20Z"
+      lastUpdateTime: "2025-11-15T23:24:20Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-11-15T23:23:44Z"
+      lastUpdateTime: "2025-11-15T23:24:20Z"
+      message: ReplicaSet "pst-db-74c6d9cf8d" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"pst-web","namespace":"toolshop"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"pst-web"}},"template":{"metadata":{"labels":{"app":"pst-web"}},"spec":{"containers":[{"env":[{"name":"API_WEB_HOST","value":"pst-apiweb"},{"name":"API_WEB_PORT","value":"80"}],"image":"europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:0a3704d","imagePullPolicy":"IfNotPresent","name":"web","ports":[{"containerPort":80}]}]}}}}
+    creationTimestamp: "2025-11-15T23:23:46Z"
+    generation: 1
+    name: pst-web
+    namespace: toolshop
+    resourceVersion: "1763250223196639023"
+    uid: 88783a12-42c5-4931-824f-5de3c9527f57
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: pst-web
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: pst-web
+      spec:
+        containers:
+        - env:
+          - name: API_WEB_HOST
+            value: pst-apiweb
+          - name: API_WEB_PORT
+            value: "80"
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:0a3704d
+          imagePullPolicy: IfNotPresent
+          name: web
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-15T23:23:46Z"
+      lastUpdateTime: "2025-11-15T23:23:58Z"
+      message: ReplicaSet "pst-web-77d7b4cf7" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-11-15T23:43:43Z"
+      lastUpdateTime: "2025-11-15T23:43:43Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-15T23:23:45Z"
+    generation: 1
+    labels:
+      app: pst-api
+      pod-template-hash: 6ddb7d4c76
+    name: pst-api-6ddb7d4c76
+    namespace: toolshop
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: pst-api
+      uid: dcf83979-2cb6-440c-bafe-2cae63672bef
+    resourceVersion: "1763249045977903007"
+    uid: ae201823-0b0e-4996-97d1-1bedc83cbc8d
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: pst-api
+        pod-template-hash: 6ddb7d4c76
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: pst-api
+          pod-template-hash: 6ddb7d4c76
+      spec:
+        containers:
+        - env:
+          - name: APP_ENV
+            value: production
+          - name: APP_DEBUG
+            value: "false"
+          - name: APP_URL
+            value: http://pst-apiweb
+          - name: DB_CONNECTION
+            value: mysql
+          - name: DB_HOST
+            value: pst-db
+          - name: DB_PORT
+            value: "3306"
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_DATABASE
+                name: pst-db-secret
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_USER
+                name: pst-db-secret
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_PASSWORD
+                name: pst-db-secret
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/api-k8s:0a3704d
+          imagePullPolicy: IfNotPresent
+          name: api
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-15T23:23:46Z"
+    generation: 1
+    labels:
+      app: pst-apiweb
+      pod-template-hash: 5886667cf4
+    name: pst-apiweb-5886667cf4
+    namespace: toolshop
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: pst-apiweb
+      uid: f4754cea-3b9a-48b8-8e82-86dff3d3fdbb
+    resourceVersion: "1763250254265919013"
+    uid: d4ed8ed1-5ffd-4589-a921-1845fa3a5f36
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: pst-apiweb
+        pod-template-hash: 5886667cf4
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: pst-apiweb
+          pod-template-hash: 5886667cf4
+      spec:
+        containers:
+        - env:
+          - name: API_BACKEND_HOST
+            value: pst-api
+          - name: API_BACKEND_PORT
+            value: "9000"
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:0a3704d
+          imagePullPolicy: IfNotPresent
+          name: apiweb
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-15T23:23:47Z"
+    generation: 1
+    labels:
+      app: pst-cron
+      pod-template-hash: b44b75b65
+    name: pst-cron-b44b75b65
+    namespace: toolshop
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: pst-cron
+      uid: ee4ef2d9-16dd-4eaa-8c11-cb70543e4487
+    resourceVersion: "1763249052137295011"
+    uid: 68e63385-a2f3-445b-b71f-a8888c0c3eeb
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: pst-cron
+        pod-template-hash: b44b75b65
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: pst-cron
+          pod-template-hash: b44b75b65
+      spec:
+        containers:
+        - env:
+          - name: APP_ENV
+            value: production
+          - name: DB_CONNECTION
+            value: mysql
+          - name: DB_HOST
+            value: pst-db
+          - name: DB_PORT
+            value: "3306"
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_DATABASE
+                name: pst-db-secret
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_USER
+                name: pst-db-secret
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_PASSWORD
+                name: pst-db-secret
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/cron-k8s:0a3704d
+          imagePullPolicy: IfNotPresent
+          name: cron
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-15T23:23:44Z"
+    generation: 1
+    labels:
+      app: pst-db
+      pod-template-hash: 74c6d9cf8d
+    name: pst-db-74c6d9cf8d
+    namespace: toolshop
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: pst-db
+      uid: 45a29bfb-0477-437e-9200-c7d4385cbed5
+    resourceVersion: "1763249060294495011"
+    uid: 21c14cd7-0877-4d82-a32b-0ec9a56e7cbe
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: pst-db
+        pod-template-hash: 74c6d9cf8d
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: pst-db
+          pod-template-hash: 74c6d9cf8d
+      spec:
+        containers:
+        - env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_ROOT_PASSWORD
+                name: pst-db-secret
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_DATABASE
+                name: pst-db-secret
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_USER
+                name: pst-db-secret
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_PASSWORD
+                name: pst-db-secret
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          name: mysql
+          ports:
+          - containerPort: 3306
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: db-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: db-data
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-15T23:23:46Z"
+    generation: 1
+    labels:
+      app: pst-web
+      pod-template-hash: 77d7b4cf7
+    name: pst-web-77d7b4cf7
+    namespace: toolshop
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: pst-web
+      uid: 88783a12-42c5-4931-824f-5de3c9527f57
+    resourceVersion: "1763250223145791014"
+    uid: 29e8c1d9-bba6-4ebf-8687-8ce73a0927fb
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: pst-web
+        pod-template-hash: 77d7b4cf7
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: pst-web
+          pod-template-hash: 77d7b4cf7
+      spec:
+        containers:
+        - env:
+          - name: API_WEB_HOST
+            value: pst-apiweb
+          - name: API_WEB_PORT
+            value: "80"
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:0a3704d
+          imagePullPolicy: IfNotPresent
+          name: web
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""

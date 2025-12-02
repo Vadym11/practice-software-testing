@@ -1,0 +1,67 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: pst-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: practice
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+
+  # PHP-FPM runtime (your pushed image)
+  api:
+    image: 340350203508.dkr.ecr.eu-west-1.amazonaws.com/tester/practicesoftwaretesting:api-k8s-641ec29
+    container_name: pst-api
+    environment:
+      APP_ENV: local
+      APP_KEY: base64:issmaIo/TcnbYxsOhXgA9V2WbH0EPnc0g302OeVhaj4=
+      APP_DEBUG: "true"
+      APP_URL: http://localhost
+      LOG_CHANNEL: stderr
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: practice
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  # HTTP adapter for API (local build)
+  apiweb:
+    build:
+      context: .
+      dockerfile: _docker/Dockerfile.apiweb
+    image: apiweb:local
+    container_name: pst-apiweb
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  # UI + reverse proxy to /api (local build; uses flattened Angular dist)
+  web:
+    build:
+      context: .
+      dockerfile: _docker/Dockerfile.web
+    image: web:local
+    container_name: pst-web
+    depends_on:
+      - apiweb
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  # Optional background worker (your pushed image)
+  cron:
+    image: 340350203508.dkr.ecr.eu-west-1.amazonaws.com/tester/practicesoftwaretesting:cron-k8s-641ec29
+    container_name: pst-cron
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  db_data:
