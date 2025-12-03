@@ -1,6 +1,6 @@
 import { Page } from "@playwright/test";
-import { BasePage } from "./BasePage";
-import { HeaderCommon } from "./HeaderCommon";
+import { BasePage } from "./BasePage.ts";
+import { HeaderCommon } from "./HeaderCommon.ts";
 
 export class HomePage extends BasePage{
 
