@@ -50,7 +50,7 @@ test.describe('Login Feature ', () => {
         await homePage.header.clickSignInLink();
 
         const loginPage = await new LoginPage(page)
-            .loginFail('email.@gmail.com', password);
+            .loginFail('emaill.@gmail.com', password);
 
         await expect(loginPage.invalidEmailFormatMsg).toHaveText('Email format is invalid');
     });
