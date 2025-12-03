@@ -28,7 +28,8 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://pst-web.toolshop.svc.cluster.local',
     baseURL: baseURL,
-
+    /* Sets the custom attribute (default is 'data-testid') name to 'data-test' */
+    testIdAttribute: 'data-test',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: 'on',
