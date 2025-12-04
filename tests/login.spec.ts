@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { LoginPage } from '../pages/LoginPage';
 
-test.describe('Login Feature ', () => {
+test.describe('Login Feature', () => {
 
     const authFile = path.join(__dirname, '../playwright/.auth/userGlobal.json');
 
@@ -28,9 +28,6 @@ test.describe('Login Feature ', () => {
         const homePage = await new HomePage(page).goTo();
 
         await homePage.header.signOut();
-
-        await homePage.header.clickMainBanner();
-
         await homePage.header.clickSignInLink();
 
         const myAccountPage = await new LoginPage(page)
@@ -44,9 +41,6 @@ test.describe('Login Feature ', () => {
         const homePage = await new HomePage(page).goTo();
 
         await homePage.header.signOut();
-
-        await homePage.header.clickMainBanner();
-
         await homePage.header.clickSignInLink();
 
         const loginPage = await new LoginPage(page)
