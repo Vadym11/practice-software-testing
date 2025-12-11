@@ -1,6 +1,12 @@
+# ---- Composer stage ----
+FROM composer:2.7 AS vendor
+WORKDIR /srv
+COPY sprint5/API/ ./
+RUN composer install --no-dev --prefer-dist --no-interaction --no-progress \
+    --ignore-platform-req=ext-ffi
+
+# ---- Runtime (CLI) ----
 FROM php:8.3-cli-alpine
 WORKDIR /app
-COPY sprint5/API/ ./
-
-# Default: queue worker (override to schedule:run in K8s/Cron if needed)
+COPY --from=vendor /srv/ ./
 CMD ["php","artisan","queue:work","--tries=3","--timeout=90"]

@@ -4,7 +4,8 @@ RUN apk add --no-cache git zip unzip icu-dev oniguruma-dev libpng-dev libzip-dev
  && docker-php-ext-install pdo_mysql intl gd zip
 
 # ---- Composer stage (copy full app first, then install once) ----
-FROM composer:2 AS vendor
+# pin to a recent Composer, optional but clearer
+FROM composer:2.7 AS vendor   
 WORKDIR /srv
 COPY sprint5/API/ ./
 RUN composer install --no-dev --prefer-dist --no-interaction --no-progress \

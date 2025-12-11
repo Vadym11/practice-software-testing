@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:0a3704d
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/web-k8s:c0729c7
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
