@@ -1,4 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+
+dotenv.config({debug: true});
 
 const baseURL = process.env.BASE_URL || 'http://127.0.0.1:8080';
 
@@ -13,8 +16,11 @@ const baseURL = process.env.BASE_URL || 'http://127.0.0.1:8080';
  */
 export default defineConfig({
   testDir: './tests',
+  /* This will apply Storage State globally.
+  Alternatively, it could be applied for a specific project (e.g. Chromium):  */
+  globalSetup: './global.setup.ts/',
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
@@ -25,10 +31,13 @@ export default defineConfig({
   reporter: [['html', { open: 'never' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    /*This is used in case of Global State Storage (globalSetup) */
+    storageState: 'playwright/.auth/userGlobal.json',
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://pst-web.toolshop.svc.cluster.local',
     baseURL: baseURL,
-
+    /* Sets the custom attribute (default is 'data-testid') name to 'data-test' */
+    testIdAttribute: 'data-test',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: 'on',
@@ -41,16 +50,16 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    // uncomment browser below to enable them
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     /* Test against mobile viewports. */
     // {

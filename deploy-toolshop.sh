@@ -1,14 +1,23 @@
 #!/usr/bin/env bash
 
+namespace="$1"
+
+if [ -z "$namespace" ]; then
+    namespace="toolshop"
+fi
+
+echo creating ns $namespace...
+kubectl create ns $namespace
+
 echo applying secrets...
-kubectl apply -f ./k8s/secret.yaml
+kubectl apply -f ./k8s/pst-db-secret.yaml -n $namespace
 echo applying db manifest...
-kubectl apply -f ./k8s/pst-db.yaml
+kubectl apply -f ./k8s/pst-db.yaml -n $namespace
 echo applying api manifest...
-kubectl apply -f ./k8s/pst-api.yaml
+kubectl apply -f ./k8s/pst-api.yaml -n $namespace
 echo applying apiweb manifest...
-kubectl apply -f ./k8s/pst-apiweb.yaml
+kubectl apply -f ./k8s/pst-apiweb.yaml -n $namespace
 echo applying web manifest...
-kubectl apply -f ./k8s/pst-web.yaml
+kubectl apply -f ./k8s/pst-web.yaml -n $namespace
 echo applying cron manifest...
-kubectl apply -f ./k8s/pst-cron.yaml
+kubectl apply -f ./k8s/pst-cron.yaml -n $namespace

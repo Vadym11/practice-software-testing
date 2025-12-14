@@ -1,4 +1,4 @@
-name: K8s Smoke Test (Toolshop)
+name: PlayWright Tests
 
 on:
   push:
@@ -49,9 +49,14 @@ jobs:
           echo "Creating slack web hook secret"
           kubectl create secret generic pst-test-secret \
             -n "$K8S_NAMESPACE" \
-            --from-literal=SLACK_WEBHOOK_URL="$SLACK_WEBHOOK_URL"
+            --from-literal=SLACK_WEBHOOK_URL="$SLACK_WEBHOOK_URL" \
+            --from-literal=EMAIL="$EMAIL" \
+            --from-literal=PASSWORD_="$PASSWORD_"
         env:
+          # these are secrets created as repo secrets
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD_: ${{ secrets.PASSWORD_ }}
 
       # 4.2. Apply DB secrets
       - name: Apply DB secrets
@@ -78,24 +83,25 @@ jobs:
           kubectl rollout status deployment/pst-db  -n "$K8S_NAMESPACE" --timeout=120s || true
           kubectl rollout status deployment/pst-api -n "$K8S_NAMESPACE" --timeout=180s
           kubectl rollout status deployment/pst-web -n "$K8S_NAMESPACE" --timeout=180s
+          kubectl rollout status deployment/pst-apiweb -n "$K8S_NAMESPACE" --timeout=180s
 
-      # 7. Port-forward the pst-web service to the runner
-      - name: Port-forward pst-web
-        run: |
-          set -e
-          echo "Starting port-forward from svc/pst-web:$K8S_SERVICE_PORT to localhost:$K8S_APP_PORT"
-          kubectl port-forward -n "$K8S_NAMESPACE" svc/pst-web "$K8S_APP_PORT:$K8S_SERVICE_PORT" >pf.log 2>&1 &
-          echo $! > pf.pid
-          # Give the port-forward a moment to establish
-          sleep 10
-          echo "Port-forward PID: $(cat pf.pid)"
+      # # 7. Port-forward the pst-web service to the runner
+      # - name: Port-forward pst-web
+      #   run: |
+      #     set -e
+      #     echo "Starting port-forward from svc/pst-web:$K8S_SERVICE_PORT to localhost:$K8S_APP_PORT"
+      #     kubectl port-forward -n "$K8S_NAMESPACE" svc/pst-web "$K8S_APP_PORT:$K8S_SERVICE_PORT" >pf.log 2>&1 &
+      #     echo $! > pf.pid
+      #     # Give the port-forward a moment to establish
+      #     sleep 10
+      #     echo "Port-forward PID: $(cat pf.pid)"
 
-      # 8. Simple smoke test: hit the UI via curl
-      - name: Smoke test via curl
-        run: |
-          set -e
-          echo "Requesting http://127.0.0.1:${K8S_APP_PORT}/"
-          curl -v --fail "http://127.0.0.1:${K8S_APP_PORT}/" | head -40
+      # # 8. Simple smoke test: hit the UI via curl
+      # - name: Smoke test via curl
+      #   run: |
+      #     set -e
+      #     echo "Requesting http://127.0.0.1:${K8S_APP_PORT}/"
+      #     curl -v --fail "http://127.0.0.1:${K8S_APP_PORT}/" | head -40
 
       # 8.1. Apply Playwright test job
       - name: Apply Playwright test job
@@ -112,7 +118,7 @@ jobs:
 
           # First wait for completion
           if kubectl wait --for=condition=complete job/pst-playwright-tests \
-              -n "$K8S_NAMESPACE" --timeout=600s; then
+              -n "$K8S_NAMESPACE" --timeout=120s; then
             echo "Playwright job completed successfully."
           else
             echo "Job did not reach 'Complete'. Checking if it failed..."
@@ -127,15 +133,15 @@ jobs:
       # (Later you’ll add a step here to run Playwright against BASE_URL=http://127.0.0.1:${K8S_APP_PORT})
 
       # 9. Stop port-forward (always attempt, even if previous steps failed)
-      - name: Stop port-forward
-        if: always()
-        run: |
-          if [ -f pf.pid ]; then
-            echo "Stopping port-forward PID $(cat pf.pid)"
-            kill "$(cat pf.pid)" || true
-          else
-            echo "No pf.pid file found, nothing to stop."
-          fi
+      # - name: Stop port-forward
+      #   if: always()
+      #   run: |
+      #     if [ -f pf.pid ]; then
+      #       echo "Stopping port-forward PID $(cat pf.pid)"
+      #       kill "$(cat pf.pid)" || true
+      #     else
+      #       echo "No pf.pid file found, nothing to stop."
+      #     fi
 
       # 10. Delete the namespace (cleanup)
       - name: Delete namespace

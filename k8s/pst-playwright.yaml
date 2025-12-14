@@ -14,7 +14,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: playwright
-          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/playwright-k8s:1764545962
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/playwright-k8s:1765389617
           resources:
             requests:
               cpu: "200m"
@@ -30,8 +30,18 @@ spec:
             - name: SLACK_WEBHOOK_URL
               valueFrom:
                 secretKeyRef:
-                  name: pst-test-secret # secret name
+                  name: pst-test-secret # secret name (creates as a step in actions workflow)
                   key: SLACK_WEBHOOK_URL
+            - name: EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: pst-test-secret # secret name (creates as a step in actions workflow)
+                  key: EMAIL
+            - name: PASSWORD_
+              valueFrom:
+                secretKeyRef:
+                  name: pst-test-secret # secret name (creates as a step in actions workflow)
+                  key: PASSWORD_
             - name: TEST_NAME
               value: "PlaywrightTests"
             # If your tests need other env vars (user, password, etc.), add them here

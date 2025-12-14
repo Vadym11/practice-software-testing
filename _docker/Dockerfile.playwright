@@ -8,10 +8,15 @@ WORKDIR /tests
 COPY package*.json ./
 RUN npm ci
 
-# Copy ONLY what Playwright needs (tests + config)
+# Copy typescript config file
+COPY tsconfig.json ./
+
+# Copy ONLY what Playwright needs (pages, tests + config)
+COPY pages/ ./pages
 COPY tests/ ./tests
 COPY playwright.config.* ./
 COPY entrypoint.js ./
+COPY global.setup.ts ./
 
 # Ensure browsers are installed (usually already in base) - not needed in 
 # this case since the base image already includes all dependencies and browsers
