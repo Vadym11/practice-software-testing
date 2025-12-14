@@ -17,3 +17,8 @@ playwright/.auth
 # Env file with sensitive data
 # -------------------------
 .env
+
+# -------------------------
+# MacOS system files
+# -------------------------
+.DS_Store
