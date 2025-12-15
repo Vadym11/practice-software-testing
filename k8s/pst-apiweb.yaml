@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: apiweb
-          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/apiweb-k8s:c0729c7
+          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/apiweb-k8s:e47f666
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
