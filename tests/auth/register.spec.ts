@@ -47,8 +47,8 @@ test.describe('Registration feature', () => {
 
         const homePage = await new HomePage(page).goTo();
 
-        // await homePage.header.clickUserNavMenu();
-        // await homePage.header.clickSignOut();
+        await homePage.header.clickUserNavMenu();
+        await homePage.header.clickSignOut();
 
         await homePage.header.clickSignInLink();
 
