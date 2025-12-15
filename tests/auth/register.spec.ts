@@ -41,7 +41,7 @@ test.describe('Registration feature', () => {
         const CITY = "Smila";
         const STATE = "Sumy";
         const COUNTRY = "Ukraine"
-        const PHONE = "380965487345"
+        const PHONE = "380965487375"
         const EMAIL = `${FIRST_NAME}.${LAST_NAME}@gmail.com`
         const PASSWORD = "Qwerty**12345"
 
