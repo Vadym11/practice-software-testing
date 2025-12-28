@@ -53,7 +53,7 @@ test.describe.serial('Registration feature', () => {
 
     test('Register new user: happy path', async ({page}) => {
 
-        await test.step('Register a new user', async () => {
+        await test.step('Register new user', async () => {
             const homePage = await new HomePage(page).goTo();
 
             await homePage.header.clickSignInLink();
