@@ -3,7 +3,7 @@ import test, { expect } from "@playwright/test";
 let token: string;
 let newUserId: string;
 
-test('API login', async ({request, baseURL}) => {
+test('API user login', async ({request, baseURL}) => {
         
         const response = await request.post(`${baseURL}/api/users/login`, {
             data: {

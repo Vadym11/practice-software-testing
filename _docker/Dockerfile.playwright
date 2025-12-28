@@ -14,6 +14,8 @@ COPY tsconfig.json ./
 # Copy ONLY what Playwright needs (pages, tests + config)
 COPY pages/ ./pages
 COPY test-utils/ ./test-utils
+COPY types/ ./types
+COPY test-data/ ./test-data
 COPY tests/ ./tests
 COPY playwright.config.* ./
 COPY entrypoint.js ./
