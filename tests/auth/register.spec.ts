@@ -41,8 +41,8 @@ test.describe.serial('Registration feature', () => {
             const [rows] = await connection.execute('SELECT * FROM users ORDER BY updated_at DESC LIMIT 1;');
             const newUser = rows[0];
 
-            expect(newUser.first_name).toBe(newUserData.firstName);
-            expect(newUser.last_name).toBe(newUserData.lastName);
+            expect(newUser.first_name).toBe(newUserData.first_name);
+            expect(newUser.last_name).toBe(newUserData.last_name);
             expect(newUser.email).toBe(newUserData.email);
         })
     })

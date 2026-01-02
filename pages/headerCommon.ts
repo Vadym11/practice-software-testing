@@ -1,14 +1,17 @@
 import { Locator, Page } from "@playwright/test";
+import { ShoppingCartMainPage } from "./shoppingCart/ShoppingCartMainPage";
 export class HeaderCommon {
 
     private readonly page: Page;
     private readonly mainBanner: Locator;
     private readonly signInLinkk: Locator;
+    private readonly cartIcon: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.mainBanner = this.page.getByTitle('Practice Software Testing - Toolshop');
         this.signInLinkk = this.page.getByTestId('nav-sign-in');
+        this.cartIcon = this.page.getByTestId('nav-cart');
     }
 
     async clickMainBanner(): Promise<void> {
@@ -37,5 +40,11 @@ export class HeaderCommon {
         await this.clickSignOut();
 
         return this;
+    }
+
+    async clickCartIcon(): Promise<ShoppingCartMainPage> {
+        await this.cartIcon.click();
+
+        return new ShoppingCartMainPage(this.page);
     }
 }

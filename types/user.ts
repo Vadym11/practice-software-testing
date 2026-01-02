@@ -1,12 +1,14 @@
 export interface User {
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
+    address: {
+        street: string;
+        postal_code: string;
+        city: string;
+        state: string;
+        country: string;
+    },
     dob: string;
-    street: string;
-    postCode: string;
-    city: string;
-    state: string;
-    country: string;
     phone: string;
     email: string;
     password: string;

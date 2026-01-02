@@ -104,14 +104,14 @@ export class RegisterPage extends BasePage {
 
     async registerNewUser(user: User): Promise<LoginPage> {
 
-        await this.enterFirstName(user.firstName);
-        await this.enterLastName(user.lastName);
+        await this.enterFirstName(user.first_name);
+        await this.enterLastName(user.last_name);
         await this.enterDob(user.dob);
-        await this.enterStreet(user.street);
-        await this.enterPostCode(user.postCode);
-        await this.enterCity(user.city);
-        await this.enterState(user.state);
-        await this.selectCountry(user.country);
+        await this.enterStreet(user.address.street);
+        await this.enterPostCode(user.address.postal_code);
+        await this.enterCity(user.address.city);
+        await this.enterState(user.address.state);
+        await this.selectCountry(user.address.country);
         await this.enterPhone(user.phone);
         await this.enterEmailAddress(user.email);
         await this.enterPassword(user.password);

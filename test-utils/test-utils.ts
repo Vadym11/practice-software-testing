@@ -35,14 +35,16 @@ export function generateRandomuserData() {
     const PASSWORD = `${FIRST_NAME}.${LAST_NAME}**12345$%`;
 
     return {
-        firstName: FIRST_NAME,
-        lastName: LAST_NAME,
+        first_name: FIRST_NAME,
+        last_name: LAST_NAME,
+        address: {
+            street: STREET,
+            postal_code: POSTCODE,
+            city: CITY,
+            state: STATE,
+            country: COUNTRY,
+        },
         dob: DOB,
-        street: STREET,
-        postCode: POSTCODE,
-        city: CITY,
-        state: STATE,
-        country: COUNTRY,
         phone: PHONE,
         email: EMAIL,
         password: PASSWORD
