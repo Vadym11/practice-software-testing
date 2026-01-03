@@ -1,4 +1,4 @@
-import {test, expect} from '@playwright/test';
+import {test, expect, FullConfig} from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
 import { HomePage } from '../../pages/HomePage';
@@ -21,6 +21,28 @@ test.describe('Login Feature ', () => {
         await page.locator('[data-test="login-submit"]').click();
 
         await expect(page.locator('[data-test="page-title"]')).toContainText('My account');
+    });
+
+    test('Login and save storage state', async ({page}) => {
+        const authFile = path.join(__dirname, '.authFile/userLocal.json');
+        if (!fs.existsSync(authFile)) {
+            console.log('Starting authentification...')
+            const homePage = new HomePage(page);
+            homePage.goTo();
+
+            await homePage.header.clickMainBanner();
+
+            await homePage.header.clickSignInLink();
+
+            const myAccountPage = await new LoginPage(page)
+                .loginSuccess(email, password);
+
+            await expect(myAccountPage.myAccountTitle).toHaveText('My account');
+
+            await page.context().storageState({ path: authFile });
+
+            console.log('Authentification finished sucessfully!')
+        }   
     });
 
     test.skip('Login POM happy path', async ({page}) => {

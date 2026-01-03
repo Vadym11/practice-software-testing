@@ -1,5 +1,8 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { LoginPage } from "./LoginPage";
+import { User } from "../types/user";
+
 export class RegisterPage extends BasePage {
 
     private readonly firstNameField: Locator;
@@ -13,6 +16,7 @@ export class RegisterPage extends BasePage {
     private readonly phone: Locator;
     private readonly email: Locator;
     private readonly password: Locator;
+    readonly customerExistMessage: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -27,6 +31,7 @@ export class RegisterPage extends BasePage {
         this.phone = page.getByTestId('phone');
         this.email = page.getByTestId('email');
         this.password = page.getByTestId('password');
+        this.customerExistMessage = page.getByTestId('register-error');
     }
 
     async enterFirstName(firstName: string): Promise<this> {
@@ -65,6 +70,24 @@ export class RegisterPage extends BasePage {
         return this;
     }
     
+    async enterPhone(phoneNumber: string): Promise<this> {
+        await this.phone.fill(phoneNumber);
+
+        return this;
+    }
+
+    async enterEmailAddress(emailAddress: string): Promise<this> {
+        await this.email.fill(emailAddress);
+
+        return this;
+    }
+
+    async enterPassword(password: string): Promise<this> {
+        await this.password.fill(password);
+
+        return this;
+    }
+
     async enterState(state: string): Promise<this> {
         await this.state.fill(state);
 
@@ -78,15 +101,39 @@ export class RegisterPage extends BasePage {
 
         return this;
     }
+
+    async registerNewUser(user: User): Promise<LoginPage> {
+
+        await this.enterFirstName(user.first_name);
+        await this.enterLastName(user.last_name);
+        await this.enterDob(user.dob);
+        await this.enterStreet(user.address.street);
+        await this.enterPostCode(user.address.postal_code);
+        await this.enterCity(user.address.city);
+        await this.enterState(user.address.state);
+        await this.selectCountry(user.address.country);
+        await this.enterPhone(user.phone);
+        await this.enterEmailAddress(user.email);
+        await this.enterPassword(user.password);
+
+        await this.clickRegisterButton();
+
+        return new LoginPage(this.page);
+    }
     
-    async clickRegisterButton(): Promise<this> {
+    async clickRegisterButton(): Promise<LoginPage> {
         await this.page.getByTestId('register-submit').click();
         
-        return this;
+        return new LoginPage(this.page);
     }
 
     getDobRequiredMessage(): Locator {
 
         return this.page.getByTestId('dob-error');
+    }
+
+    getCustomerExistMessage(): Locator {
+
+        return this.customerExistMessage;
     }
 }

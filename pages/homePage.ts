@@ -1,6 +1,7 @@
 import { Page } from "@playwright/test";
 import { HeaderCommon } from "./HeaderCommon";
 import { BasePage } from "./BasePage";
+import { ProductPage } from "./ProductPage";
 
 export class HomePage extends BasePage{
 
@@ -15,5 +16,11 @@ export class HomePage extends BasePage{
         await this.page.goto('/');
 
         return this;
+    }
+
+    async clickFirstProduct() {
+        await this.page.getByTestId('product-name').first().click();
+
+        return new ProductPage(this.page);
     }
 }

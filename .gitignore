@@ -12,6 +12,7 @@ stryker.log
 # Authentication file
 # -------------------------
 playwright/.auth
+tests/auth/.authFile
 
 # -------------------------
 # Env file with sensitive data
@@ -22,3 +23,5 @@ playwright/.auth
 # MacOS system files
 # -------------------------
 .DS_Store
+
+.cmd
