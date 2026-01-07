@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 import { HeaderCommon } from "./HeaderCommon";
 import { MyAccountPage } from "./MyAccountPage";
@@ -15,6 +15,7 @@ export class LoginPage extends BasePage{
     private readonly registerLink: Locator;
     private readonly forgotPasswordLink: Locator;
     public readonly invalidEmailFormatMsg: Locator;
+    public readonly loginHeader: Locator;
     public readonly header: HeaderCommon;
 
     constructor(page: Page) {
@@ -27,6 +28,7 @@ export class LoginPage extends BasePage{
         this.registerLink = page.getByRole('link', {name: 'Register your account'});
         this.forgotPasswordLink = page.getByRole('link', {name: 'Forgot your Password?'});
         this.invalidEmailFormatMsg = page.getByTestId('email-error');
+        this.loginHeader = page.getByRole('heading', {name: 'Login'});
         this.header = new HeaderCommon(page);
     }
 
@@ -76,5 +78,9 @@ export class LoginPage extends BasePage{
 
     async clickForgotPassLink(): Promise<void> {
         await this.forgotPasswordLink.click();
-    } 
+    }
+    
+    getLoginHeader(): Locator {
+        return this.loginHeader;
+    }
 }

@@ -14,7 +14,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: playwright
-          image: europe-west1-docker.pkg.dev/earnest-acre-474618-n9/toolshop/playwright-k8s:1765830734
+          image: europe-west1-docker.pkg.dev/project-2e1e6c1d-528d-4a3a-803/toolshop/playwright-k8s:1767826159
           resources:
             requests:
               cpu: "200m"
@@ -27,6 +27,25 @@ spec:
             # Point tests to the in-cluster Service for your web app
             - name: BASE_URL
               value: "http://pst-web:80"
+            - name: MYSQL_HOST
+              value: pst-db
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: pst-db-secret # secret name (creates as a step in actions workflow)
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pst-db-secret # secret name (creates as a step in actions workflow)
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: pst-db-secret # secret name (creates as a step in actions workflow)
+                  key: MYSQL_DATABASE
             - name: SLACK_WEBHOOK_URL
               valueFrom:
                 secretKeyRef:
